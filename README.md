@@ -19,4 +19,4 @@ Termux akan mendeteksi folder yang memiliki `main.py` dan membuat menu otomatis!
 Salin dan tempel perintah ini di Termux kamu 👇
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/jwfathoni17/my-termux-menu/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/windrase/my-termux-menu/main/install.sh)
