@@ -17,6 +17,10 @@ Termux akan mendeteksi folder yang memiliki `main.py` dan membuat menu otomatis!
 ## 🧰 Instalasi Otomatis
 
 Salin dan tempel perintah ini di Termux kamu 👇
+```
+git clone https://github.com/windrase/my-termux-menu
+cd my-termux-menu
+```
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/windrase/my-termux-menu/main/install.sh)
