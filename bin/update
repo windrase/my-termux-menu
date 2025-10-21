@@ -1,0 +1,10 @@
+#!/data/data/com.termux/files/usr/bin/bash
+echo -e "\e[1;33m🔄 Memperbarui semua repo di $HOME...\e[0m"
+for g in "$HOME"/*/.git; do
+  repo="${g%/.git}"
+  [ -d "$repo" ] || continue
+  name="$(basename "$repo")"
+  echo -e "\e[36m→ $name\e[0m"
+  (cd "$repo" && git pull --rebase)
+done
+echo -e "\e[1;32m✅ Selesai.\e[0m"
