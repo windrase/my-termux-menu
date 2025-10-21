@@ -6,7 +6,7 @@ while true; do
   clear
   echo -e "\e[1;36m╔════════════════════════════════════════════════╗\e[0m"
   echo -e "\e[1;36m║\e[0m          🌟 \e[1;33mSELAMAT DATANG DI TERMUX\e[0m 🌟        \e[1;36m║\e[0m"
-  echo -e "\e[1;36m║\e[0m              \e[90mBY JONI WIJAYA FATHONI\e[0m            \e[1;36m║\e[0m"
+  echo -e "\e[1;36m║\e[0m                 \e[90mBY Corrodedvomit\e[0m            \e[1;36m║\e[0m"
   echo -e "\e[1;36m╚════════════════════════════════════════════════╝\e[0m"
   echo
   echo -e "\e[1;33m📂 Pilih program yang ingin dijalankan:\e[0m"
@@ -14,10 +14,12 @@ while true; do
   # 1–3: entri tetap
   echo -e "  \e[32m[1]\e[0m ➤ Jalankan anomali-xl"
   echo -e "  \e[34m[2]\e[0m ➤ Jalankan me-cli"
+  echo -e "  \e[35m[3]\e[0m ➤ Jalankan xldor"
   echo -e "  \e[35m[3]\e[0m ➤ Jalankan dor"
+  echo -e "  \e[35m[3]\e[0m ➤ Jalankan reedem"
 
   # 4..n: entri dinamis (folder $HOME/* yang punya main.py)
-  EXCLUDE_SET=" anomali-xl me-cli dor "
+  EXCLUDE_SET=" anomali-xl me-cli xldor dor reedem "
   DYN_NAMES=()
   n=4
   for dir in $(find "$HOME" -maxdepth 1 -mindepth 1 -type d -printf "%f\n" | sort); do
@@ -50,7 +52,15 @@ while true; do
       echo -e "\e[90mMenjalankan: python main.py\e[0m"; python main.py
       read -p "ENTER untuk kembali ke menu..." ;;
     3)
+      cd "$HOME/xldor" 2>/dev/null || { echo "❌ Folder xldor tidak ditemukan."; read -p "ENTER..."; continue; }
+      echo -e "\e[90mMenjalankan: python main.py\e[0m"; python main.py
+      read -p "ENTER untuk kembali ke menu..." ;;
+    4)
       cd "$HOME/dor" 2>/dev/null || { echo "❌ Folder dor tidak ditemukan."; read -p "ENTER..."; continue; }
+      echo -e "\e[90mMenjalankan: python main.py\e[0m"; python main.py
+      read -p "ENTER untuk kembali ke menu..." ;;
+    5)
+      cd "$HOME/reedem" 2>/dev/null || { echo "❌ Folder reedem tidak ditemukan."; read -p "ENTER..."; continue; }
       echo -e "\e[90mMenjalankan: python main.py\e[0m"; python main.py
       read -p "ENTER untuk kembali ke menu..." ;;
     [0-9]*)
