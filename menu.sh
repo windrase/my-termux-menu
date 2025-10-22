@@ -38,9 +38,7 @@ add_new_repo() {
   read -p "🌐 Masukkan URL Git repo: " repo
   [ -z "$repo" ] && echo "❌ URL repo tidak boleh kosong." && read -p "ENTER..." && return
 
-  # Ambil nama folder otomatis dari URL
   folder=$(basename "$repo" .git)
-
   echo "$folder|$repo" >> "$REPO_LIST"
   echo -e "\e[32m✅ Repo '$folder' berhasil ditambahkan ke daftar!\e[0m"
   read -p "ENTER untuk kembali ke menu..."
@@ -68,8 +66,19 @@ delete_repo() {
   read -p "Pilih nomor folder yang ingin dihapus: " num
   [[ ! "$num" =~ ^[0-9]+$ ]] && echo "❌ Pilihan tidak valid." && read -p "ENTER..." && return
   [[ $num -lt 1 || $num -gt ${#dirs[@]} ]] && echo "❌ Nomor di luar jangkauan." && read -p "ENTER..." && return
-  }
-  
+
+  target="${dirs[$((num-1))]}"
+  echo
+  read -p "⚠️ Yakin ingin menghapus folder '$target'? (y/n): " konfirm
+  if [[ "$konfirm" =~ ^[Yy]$ ]]; then
+    rm -rf "$HOME/$target"
+    echo -e "\e[32m✅ Folder '$target' berhasil dihapus.\e[0m"
+  else
+    echo "Dibatalkan."
+  fi
+  read -p "ENTER untuk kembali ke menu..."
+}  # <--- penting, penutup fungsi delete_repo
+
 # Menu Utama repo
 while true; do
   clear
@@ -80,17 +89,15 @@ while true; do
   echo
   echo -e "\e[1;33m📂 Pilih program yang ingin dijalankan:\e[0m"
 
-  # Menu default
   echo -e "  \e[32m[1]\e[0m ➤ Jalankan anomali-xl"
   echo -e "  \e[34m[2]\e[0m ➤ Jalankan me-cli"
   echo -e "  \e[35m[3]\e[0m ➤ Jalankan xldor"
   echo -e "  \e[35m[4]\e[0m ➤ Jalankan dor"
   echo -e "  \e[35m[5]\e[0m ➤ Jalankan reedem"
 
-  # 4..n: entri dinamis (folder $HOME/* yang punya main.py)
   EXCLUDE_SET=" anomali-xl me-cli xldor dor reedem "
   DYN_NAMES=()
-  n=4
+  n=6
   for dir in $(find "$HOME" -maxdepth 1 -mindepth 1 -type d -printf "%f\n" | sort); do
     case "$dir" in .*) continue ;; esac
     [[ " $EXCLUDE_SET " == *" $dir "* ]] && continue
@@ -107,7 +114,7 @@ while true; do
   echo -e "  \e[31m[q]\e[0m ➤ Keluar Termux"
   echo
 
-  read -p "Masukkan pilihan [1-${n}/a/m/q]: " pilih
+  read -p "Masukkan pilihan [1-${n}/a/d/m/q]: " pilih
 
   case "$pilih" in
     1) run_or_clone "anomali-xl" "https://saus.gemail.ink/anomali/anomali-xl.git" ;;
@@ -115,18 +122,8 @@ while true; do
     3) run_or_clone "xldor" "https://github.com/barbexid/dor8.git" ;;
     4) run_or_clone "dor" "https://github.com/barbexid/dor.git" ;;
     5) run_or_clone "reedem" "https://github.com/kejuashuejia/reedem.git" ;;
-    [0-9]*)
-      if [[ -n "${DYN_MENU[$pilih]}" ]]; then
-        IFS='|' read -r folder repo <<< "${DYN_MENU[$pilih]}"
-        run_or_clone "$folder" "$repo"
-      else
-        echo -e "\e[31m❌ Nomor tidak valid.\e[0m"
-        read -p "ENTER..."
-      fi
-      ;;
-    a|A)
-      add_new_repo
-      ;;
+    a|A) add_new_repo ;;
+    d|D) delete_repo ;;
     m|M)
       echo -e "\n\e[36mKeluar dari menu. Selamat bekerja di shell biasa! 🧑‍💻\e[0m"
       break
