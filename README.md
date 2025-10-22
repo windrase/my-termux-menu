@@ -16,6 +16,10 @@ Termux akan mendeteksi folder yang memiliki `main.py` dan membuat menu otomatis!
 - 🧑‍💻 Desain interaktif dan berwarna, nyaman digunakan
 
 ---
+## ⌛Update
+- Penambahan fitur update git pull --rebase ke semua repo
+
+---
 
 ## 🧰 Instalasi Otomatis
 
