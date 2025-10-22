@@ -84,7 +84,7 @@ while true; do
   clear
   echo -e "\e[1;36m╔════════════════════════════════════════════════╗\e[0m"
   echo -e "\e[1;36m║\e[0m          🌟 \e[1;33mSELAMAT DATANG DI TERMUX\e[0m 🌟        \e[1;36m║\e[0m"
-  echo -e "\e[1;36m║\e[0m                 \e[90mBY Corrodedvomit\e[0m                 \e[1;36m║\e[0m"
+  echo -e "\e[1;36m║\e[0m                 \e[90mBY Corrodedvomit\e[0m               \e[1;36m║\e[0m"
   echo -e "\e[1;36m╚════════════════════════════════════════════════╝\e[0m"
   echo
   echo -e "\e[1;33m📂 Pilih program yang ingin dijalankan:\e[0m"
