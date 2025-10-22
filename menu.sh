@@ -32,6 +32,20 @@ run_or_clone() {
   read -p "ENTER untuk kembali ke menu..."
 }
 
+# bash setup.sh
+  if [ "$first_clone" = true ] && [ -f "setup.sh" ]; then
+    echo -e "\e[36m⚙️ Menjalankan setup.sh untuk inisialisasi awal...\e[0m"
+    bash setup.sh || {
+      echo -e "\e[31m❌ setup.sh gagal dijalankan.\e[0m"
+      read -p "ENTER untuk lanjut..."
+    }
+  fi
+
+  echo -e "\e[90mMenjalankan: python main.py\e[0m"
+  python main.py
+  read -p "ENTER untuk kembali ke menu..."
+}
+
 # Tambah Repo baru
 add_new_repo() {
   echo
@@ -102,8 +116,8 @@ while true; do
   echo
   echo -e "\e[1;33m📂 Pilih program yang ingin dijalankan:\e[0m"
 
-  echo -e "  \e[32m[1]\e[0m ➤ Jalankan anomali-xl"
-  echo -e "  \e[34m[2]\e[0m ➤ Jalankan me-cli"
+  echo -e "  \e[35m[1]\e[0m ➤ Jalankan anomali-xl"
+  echo -e "  \e[35m[2]\e[0m ➤ Jalankan me-cli"
   echo -e "  \e[35m[3]\e[0m ➤ Jalankan xldor"
   echo -e "  \e[35m[4]\e[0m ➤ Jalankan dor8"
   echo -e "  \e[35m[5]\e[0m ➤ Jalankan reedem"
@@ -121,10 +135,10 @@ while true; do
   done
 
   echo
-  echo -e "  \e[36m[a]\e[0m ➤ Tambah repo baru"
-  echo -e "  \e[31m[d]\e[0m ➤ Hapus repo dari menu"
-  echo -e "  \e[31m[u]\e[0m ➤ Update semua repo"
-  echo -e "  \e[33m[m]\e[0m ➤ Keluar menu (masuk shell biasa)"
+  echo -e "  \e[35m[a]\e[0m ➤ Tambah repo baru"
+  echo -e "  \e[35m[d]\e[0m ➤ Hapus repo dari menu"
+  echo -e "  \e[35m[u]\e[0m ➤ Update semua repo"
+  echo -e "  \e[35m[m]\e[0m ➤ Keluar menu (masuk shell biasa)"
   echo -e "  \e[31m[q]\e[0m ➤ Keluar Termux"
   echo
 
