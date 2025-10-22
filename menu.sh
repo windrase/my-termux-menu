@@ -81,7 +81,7 @@ delete_repo() {
 
 # Update repo
 update_repo() {
-  echo -e "\n\e[36m🔄 Memperbarui semua repo Git di HOME...\e[0m"
+  echo -e "\n\e[36m🔄 Memperbarui semua repo Git di menu...\e[0m"
   for dir in "$HOME"/*/; do
     [ -d "$dir/.git" ] || continue
     echo -e "\n\e[33m📦 Memperbarui $(basename "$dir")...\e[0m"
@@ -128,7 +128,7 @@ while true; do
   echo -e "  \e[31m[q]\e[0m ➤ Keluar Termux"
   echo
 
-  read -p "Masukkan pilihan [1-${n}/a/d/m/q]: " pilih
+  read -p "Masukkan pilihan [1-${n}/a/d/u/m/q]: " pilih
 
   case "$pilih" in
     1) run_or_clone "anomali-xl" "https://saus.gemail.ink/anomali/anomali-xl.git" ;;
@@ -150,7 +150,7 @@ while true; do
     5) run_or_clone "reedem" "https://github.com/kejuashuejia/reedem.git" ;;
     a|A) add_new_repo ;;
     d|D) delete_repo ;;
-    u|U) delete_repo ;;
+    u|U) update_repo ;;
     [0-20]*)
       index=$((pilih - 6))
       if [ $index -ge 0 ] && [ $index -lt ${#DYN_NAMES[@]} ]; then
