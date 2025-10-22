@@ -20,13 +20,10 @@ run_or_clone() {
       return
     }
 
-    # Pastikan folder sudah ada
-    if [ -d "$HOME/$folder" ]; then
-      cd "$HOME/$folder" || return
-      if [ -f "setup.sh" ]; then
-        echo -e "\e[36m🛠  Menjalankan setup.sh (hanya pertama kali)...\e[0m"
-        bash setup.sh || echo -e "\e[31m❌ setup.sh gagal dijalankan.\e[0m"
-      fi
+    # Jalankan setup.sh jika ada
+    if [ -f "$HOME/$folder/setup.sh" ]; then
+      echo -e "\e[36m🛠 Menjalankan setup.sh (hanya pertama kali)...\e[0m"
+      (cd "$HOME/$folder" && bash setup.sh) || echo -e "\e[31m❌ setup.sh gagal dijalankan.\e[0m"
     fi
   fi
 
@@ -46,18 +43,41 @@ run_or_clone() {
   read -p "ENTER untuk kembali ke menu..."
 }
 
-# Tambah Repo baru
+# Tambah Repo baru + langsung clone & setup
 add_new_repo() {
   echo
   read -p "🌐 Masukkan URL Git repo: " repo
   [ -z "$repo" ] && echo "❌ URL repo tidak boleh kosong." && read -p "ENTER..." && return
 
   folder=$(basename "$repo" .git)
+  echo -e "\e[33m🔍 Meng-clone repo '$folder'...\e[0m"
+
+  # Hapus folder lama kalau ada
+  [ -d "$HOME/$folder" ] && rm -rf "$HOME/$folder"
+
+  # Clone repo
+  git clone "$repo" "$HOME/$folder" || {
+    echo -e "\e[31m❌ Gagal clone repo $repo\e[0m"
+    read -p "ENTER..."
+    return
+  }
+
+  # Jalankan setup.sh jika ada
+  if [ -f "$HOME/$folder/setup.sh" ]; then
+    echo -e "\e[36m🛠 Menjalankan setup.sh...\e[0m"
+    (cd "$HOME/$folder" && bash setup.sh)
+  fi
+
+  # Jalankan main.py jika ada
+  if [ -f "$HOME/$folder/main.py" ]; then
+    echo -e "\e[90m🚀 Menjalankan: python main.py\e[0m"
+    (cd "$HOME/$folder" && python main.py)
+  fi
+
   echo "$folder|$repo" >> "$REPO_LIST"
-  echo -e "\e[32m✅ Repo '$folder' berhasil ditambahkan ke daftar!\e[0m"
+  echo -e "\e[32m✅ Repo '$folder' berhasil ditambahkan, di-setup, dan dijalankan!\e[0m"
   read -p "ENTER untuk kembali ke menu..."
 }
-
 # Hapus Repo
 delete_repo() {
   echo
