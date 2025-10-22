@@ -68,8 +68,8 @@ delete_repo() {
   read -p "Pilih nomor folder yang ingin dihapus: " num
   [[ ! "$num" =~ ^[0-9]+$ ]] && echo "❌ Pilihan tidak valid." && read -p "ENTER..." && return
   [[ $num -lt 1 || $num -gt ${#dirs[@]} ]] && echo "❌ Nomor di luar jangkauan." && read -p "ENTER..." && return
+  }
   
-
 # Menu Utama repo
 while true; do
   clear
