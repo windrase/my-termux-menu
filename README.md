@@ -6,6 +6,7 @@ Termux akan mendeteksi folder yang memiliki `main.py` dan membuat menu otomatis!
 ---
 
 ## 🚀 Fitur
+- ✨ Tambah folder baru tanpa ke shell
 - 🔍 Auto deteksi folder berisi `main.py`
 - 📂 Jalankan langsung dari menu (otomatis `cd` dan `python main.py`)
 - 💡 Tambah repo baru? Menu langsung update otomatis!
@@ -15,6 +16,11 @@ Termux akan mendeteksi folder yang memiliki `main.py` dan membuat menu otomatis!
 ---
 
 ## 🧰 Instalasi Otomatis
+
+Cara Tambah Folder baru tekan a kemudian masukan link repo contoh
+```
+https://saus.gemail.ink/anomali/anomali-xl.git
+```
 
 Salin dan tempel perintah ini di Termux kamu 👇
 ```
