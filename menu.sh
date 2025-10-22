@@ -46,6 +46,30 @@ add_new_repo() {
   read -p "ENTER untuk kembali ke menu..."
 }
 
+# Hapus Repo
+delete_repo() {
+  echo
+  echo -e "\e[1;31m🗑️  Hapus Repository dari menu:\e[0m"
+  echo
+  dirs=($(find "$HOME" -maxdepth 1 -mindepth 1 -type d -printf "%f\n" | sort))
+  if [ ${#dirs[@]} -eq 0 ]; then
+    echo "Tidak ada folder yang bisa dihapus."
+    read -p "ENTER..."
+    return
+  fi
+
+  i=1
+  for d in "${dirs[@]}"; do
+    echo "  [$i] $d"
+    ((i++))
+  done
+
+  echo
+  read -p "Pilih nomor folder yang ingin dihapus: " num
+  [[ ! "$num" =~ ^[0-9]+$ ]] && echo "❌ Pilihan tidak valid." && read -p "ENTER..." && return
+  [[ $num -lt 1 || $num -gt ${#dirs[@]} ]] && echo "❌ Nomor di luar jangkauan." && read -p "ENTER..." && return
+  
+
 # Menu Utama repo
 while true; do
   clear
@@ -78,6 +102,7 @@ while true; do
 
   echo
   echo -e "  \e[36m[a]\e[0m ➤ Tambah repo baru"
+  echo -e "  \e[31m[d]\e[0m ➤ Hapus repo dari menu"
   echo -e "  \e[33m[m]\e[0m ➤ Keluar menu (masuk shell biasa)"
   echo -e "  \e[31m[q]\e[0m ➤ Keluar Termux"
   echo
