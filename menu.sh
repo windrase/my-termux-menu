@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==========================================
-# 🌟 TERMUX AUTO MENU (By Joni Wijaya Fathoni)
+# 🌟 TERMUX MENU BY CORRODEDVOMIT
 # ==========================================
 
 # ======== FUNGSI CLONE & JALANKAN ========
