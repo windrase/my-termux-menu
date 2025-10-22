@@ -120,10 +120,38 @@ while true; do
     1) run_or_clone "anomali-xl" "https://saus.gemail.ink/anomali/anomali-xl.git" ;;
     2) run_or_clone "me-cli" "https://github.com/purplemashu/me-cli.git" ;;
     3) run_or_clone "xldor" "https://github.com/baloenk/xldor.git" ;;
-    4) run_or_clone "dor8" "https://github.com/barbexid/dor8.git" ;;
+    4)
+    run_or_clone "dor8" "https://github.com/barbexid/dor8.git"
+  if [ -f "$HOME/dor8/.env" ]; then
+    echo -e "\e[33m📝 Membuka file .env untuk edit sebelum menjalankan dor8...\e[0m"
+    read -p "Tekan ENTER untuk lanjut edit .env..."
+    nano "$HOME/dor8/.env"
+  else
+    echo -e "\e[33m⚠️ File .env belum ada. Membuat file baru...\e[0m"
+    nano "$HOME/dor8/.env"
+  fi
+  cd "$HOME/dor8" && python main.py
+  read -p "ENTER untuk kembali ke menu..."
+  ;;
     5) run_or_clone "reedem" "https://github.com/kejuashuejia/reedem.git" ;;
     a|A) add_new_repo ;;
     d|D) delete_repo ;;
+    [0-14]*)
+      index=$((pilih - 6))
+      if [ $index -ge 0 ] && [ $index -lt ${#DYN_NAMES[@]} ]; then
+        cd "$HOME/${DYN_NAMES[$index]}" || {
+          echo -e "\e[31m❌ Gagal masuk folder.\e[0m"
+          read -p "ENTER..."
+          continue
+        }
+        echo -e "\e[90mMenjalankan: python main.py\e[0m"
+        python main.py
+        read -p "ENTER untuk kembali ke menu..."
+      else
+        echo -e "\e[31m❌ Nomor tidak valid.\e[0m"
+        read -p "ENTER..."
+      fi
+      ;;
     m|M)
       echo -e "\n\e[36mKeluar dari menu. Selamat bekerja di shell biasa! 🧑‍💻\e[0m"
       break
