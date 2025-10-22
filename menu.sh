@@ -19,6 +19,15 @@ run_or_clone() {
       read -p "ENTER untuk kembali..."
       return
     }
+
+    # Pastikan folder sudah ada
+    if [ -d "$HOME/$folder" ]; then
+      cd "$HOME/$folder" || return
+      if [ -f "setup.sh" ]; then
+        echo -e "\e[36m🛠  Menjalankan setup.sh (hanya pertama kali)...\e[0m"
+        bash setup.sh || echo -e "\e[31m❌ setup.sh gagal dijalankan.\e[0m"
+      fi
+    fi
   fi
 
   cd "$HOME/$folder" || {
@@ -27,22 +36,13 @@ run_or_clone() {
     return
   }
 
-  echo -e "\e[90mMenjalankan: python main.py\e[0m"
-  python main.py
-  read -p "ENTER untuk kembali ke menu..."
-}
-
-# bash setup.sh
-  if [ "$first_clone" = true ] && [ -f "setup.sh" ]; then
-    echo -e "\e[36m⚙️ Menjalankan setup.sh untuk inisialisasi awal...\e[0m"
-    bash setup.sh || {
-      echo -e "\e[31m❌ setup.sh gagal dijalankan.\e[0m"
-      read -p "ENTER untuk lanjut..."
-    }
+  if [ -f "main.py" ]; then
+    echo -e "\e[90m🚀 Menjalankan: python main.py\e[0m"
+    python main.py
+  else
+    echo -e "\e[31m❌ File main.py tidak ditemukan di $folder\e[0m"
   fi
 
-  echo -e "\e[90mMenjalankan: python main.py\e[0m"
-  python main.py
   read -p "ENTER untuk kembali ke menu..."
 }
 
@@ -148,19 +148,7 @@ while true; do
     1) run_or_clone "anomali-xl" "https://saus.gemail.ink/anomali/anomali-xl.git" ;;
     2) run_or_clone "me-cli" "https://github.com/purplemashu/me-cli.git" ;;
     3) run_or_clone "xldor" "https://github.com/baloenk/xldor.git" ;;
-    4)
-    run_or_clone "dor8" "https://github.com/barbexid/dor8.git"
-  if [ -f "$HOME/dor8/.env" ]; then
-    echo -e "\e[33m📝 Membuka file .env untuk edit sebelum menjalankan dor8...\e[0m"
-    read -p "Tekan ENTER untuk lanjut edit .env..."
-    nano "$HOME/dor8/.env"
-  else
-    echo -e "\e[33m⚠️ File .env belum ada. Membuat file baru...\e[0m"
-    nano "$HOME/dor8/.env"
-  fi
-  cd "$HOME/dor8" && python main.py
-  read -p "ENTER untuk kembali ke menu..."
-  ;;
+    4) run_or_clone "dor8" "https://github.com/barbexid/dor8.git" ;;
     5) run_or_clone "reedem" "https://github.com/kejuashuejia/reedem.git" ;;
     a|A) add_new_repo ;;
     d|D) delete_repo ;;
