@@ -76,20 +76,6 @@ while true; do
     n=$((n+1))
   done
 
-  # Menu tambahan dari file
-  n=6
-  declare -A DYN_MENU
-  if [ -f "$REPO_LIST" ]; then
-    echo
-    echo -e "\e[33m📦 Repo tambahan:\e[0m"
-    while IFS='|' read -r folder repo; do
-      [ -z "$folder" ] && continue
-      printf "  \e[32m[%d]\e[0m ➤ Jalankan %s\n" "$n" "$folder"
-      DYN_MENU["$n"]="$folder|$repo"
-      n=$((n+1))
-    done < "$REPO_LIST"
-  fi
-
   echo
   echo -e "  \e[36m[a]\e[0m ➤ Tambah repo baru"
   echo -e "  \e[33m[m]\e[0m ➤ Keluar menu (masuk shell biasa)"
