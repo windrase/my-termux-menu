@@ -77,7 +77,7 @@ delete_repo() {
     echo "Dibatalkan."
   fi
   read -p "ENTER untuk kembali ke menu..."
-}  # <--- penting, penutup fungsi delete_repo
+}  
 
 # Menu Utama repo
 while true; do
