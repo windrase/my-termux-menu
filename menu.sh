@@ -63,6 +63,19 @@ while true; do
   echo -e "  \e[35m[4]\e[0m ➤ Jalankan dor"
   echo -e "  \e[35m[5]\e[0m ➤ Jalankan reedem"
 
+  # 4..n: entri dinamis (folder $HOME/* yang punya main.py)
+  EXCLUDE_SET=" anomali-xl me-cli xldor dor reedem "
+  DYN_NAMES=()
+  n=4
+  for dir in $(find "$HOME" -maxdepth 1 -mindepth 1 -type d -printf "%f\n" | sort); do
+    case "$dir" in .*) continue ;; esac
+    [[ " $EXCLUDE_SET " == *" $dir "* ]] && continue
+    [ -f "$HOME/$dir/main.py" ] || continue
+    DYN_NAMES+=("$dir")
+    printf "  \e[32m[%d]\e[0m ➤ Jalankan %s\n" "$n" "$dir"
+    n=$((n+1))
+  done
+
   # Menu tambahan dari file
   n=6
   declare -A DYN_MENU
