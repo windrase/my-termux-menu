@@ -3,16 +3,18 @@
 # 🌟 TERMUX MENU BY CORRODEDVOMIT
 # ==========================================
 
-# ======== FUNGSI CLONE & JALANKAN ========
+REPO_LIST="$HOME/.termux_repos"
+
+# clone folder ketika folder tidak ada
 run_or_clone() {
   local folder="$1"
   local repo_url="$2"
 
   cd "$HOME" || exit
 
-  if [ ! -d "$folder" ]; then
+  if [ ! -d "$HOME/$folder" ]; then
     echo -e "\e[33m🔍 Folder $folder belum ada, cloning dari $repo_url ...\e[0m"
-    git clone "$repo_url" "$folder" || {
+    git clone "$repo_url" "$HOME/$folder" || {
       echo -e "\e[31m❌ Gagal clone repo $repo_url\e[0m"
       read -p "ENTER untuk kembali..."
       return
@@ -30,7 +32,21 @@ run_or_clone() {
   read -p "ENTER untuk kembali ke menu..."
 }
 
-# ======== MENU UTAMA ========
+# Tambah Repo baru
+add_new_repo() {
+  echo
+  read -p "🌐 Masukkan URL Git repo: " repo
+  [ -z "$repo" ] && echo "❌ URL repo tidak boleh kosong." && read -p "ENTER..." && return
+
+  # Ambil nama folder otomatis dari URL
+  folder=$(basename "$repo" .git)
+
+  echo "$folder|$repo" >> "$REPO_LIST"
+  echo -e "\e[32m✅ Repo '$folder' berhasil ditambahkan ke daftar!\e[0m"
+  read -p "ENTER untuk kembali ke menu..."
+}
+
+# Menu Utama repo
 while true; do
   clear
   echo -e "\e[1;36m╔════════════════════════════════════════════════╗\e[0m"
@@ -39,17 +55,35 @@ while true; do
   echo -e "\e[1;36m╚════════════════════════════════════════════════╝\e[0m"
   echo
   echo -e "\e[1;33m📂 Pilih program yang ingin dijalankan:\e[0m"
+
+  # Menu default
   echo -e "  \e[32m[1]\e[0m ➤ Jalankan anomali-xl"
   echo -e "  \e[34m[2]\e[0m ➤ Jalankan me-cli"
   echo -e "  \e[35m[3]\e[0m ➤ Jalankan xldor"
   echo -e "  \e[35m[4]\e[0m ➤ Jalankan dor"
   echo -e "  \e[35m[5]\e[0m ➤ Jalankan reedem"
+
+  # Menu tambahan dari file
+  n=6
+  declare -A DYN_MENU
+  if [ -f "$REPO_LIST" ]; then
+    echo
+    echo -e "\e[33m📦 Repo tambahan:\e[0m"
+    while IFS='|' read -r folder repo; do
+      [ -z "$folder" ] && continue
+      printf "  \e[32m[%d]\e[0m ➤ Jalankan %s\n" "$n" "$folder"
+      DYN_MENU["$n"]="$folder|$repo"
+      n=$((n+1))
+    done < "$REPO_LIST"
+  fi
+
   echo
+  echo -e "  \e[36m[a]\e[0m ➤ Tambah repo baru"
   echo -e "  \e[33m[m]\e[0m ➤ Keluar menu (masuk shell biasa)"
   echo -e "  \e[31m[q]\e[0m ➤ Keluar Termux"
   echo
 
-  read -p "Masukkan pilihan [1-5/m/q]: " pilih
+  read -p "Masukkan pilihan [1-${n}/a/m/q]: " pilih
 
   case "$pilih" in
     1) run_or_clone "anomali-xl" "https://saus.gemail.ink/anomali/anomali-xl.git" ;;
@@ -57,6 +91,18 @@ while true; do
     3) run_or_clone "xldor" "https://github.com/barbexid/dor8.git" ;;
     4) run_or_clone "dor" "https://github.com/barbexid/dor.git" ;;
     5) run_or_clone "reedem" "https://github.com/kejuashuejia/reedem.git" ;;
+    [0-9]*)
+      if [[ -n "${DYN_MENU[$pilih]}" ]]; then
+        IFS='|' read -r folder repo <<< "${DYN_MENU[$pilih]}"
+        run_or_clone "$folder" "$repo"
+      else
+        echo -e "\e[31m❌ Nomor tidak valid.\e[0m"
+        read -p "ENTER..."
+      fi
+      ;;
+    a|A)
+      add_new_repo
+      ;;
     m|M)
       echo -e "\n\e[36mKeluar dari menu. Selamat bekerja di shell biasa! 🧑‍💻\e[0m"
       break
