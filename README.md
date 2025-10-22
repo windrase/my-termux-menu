@@ -1,4 +1,4 @@
-# 🌟 My Termux Menu by Joni Wijaya Fathoni
+# 🌟 My Termux Menu RECODE Corrodedvomit 
 
 Tampilan menu otomatis untuk Termux yang bisa menjalankan berbagai repository Python kamu secara langsung.  
 Termux akan mendeteksi folder yang memiliki `main.py` dan membuat menu otomatis! ✨
