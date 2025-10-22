@@ -52,11 +52,11 @@ while true; do
   read -p "Masukkan pilihan [1-5/m/q]: " pilih
 
   case "$pilih" in
-    1) run_or_clone "anomali-xl" "git clone https://saus.gemail.ink/anomali/anomali-xl" ;;
-    2) run_or_clone "me-cli" "git clone https://github.com/purplemashu/me-cli" ;;
-    3) run_or_clone "xldor" "git clone https://github.com/barbexid/dor8" ;;
-    4) run_or_clone "dor" "git clone https://github.com/barbexid/dor" ;;
-    5) run_or_clone "reedem" "git clone https://github.com/kejuashuejia/reedem" ;;
+    1) run_or_clone "anomali-xl" "https://saus.gemail.ink/anomali/anomali-xl.git" ;;
+    2) run_or_clone "me-cli" "https://github.com/purplemashu/me-cli.git" ;;
+    3) run_or_clone "xldor" "https://github.com/barbexid/dor8.git" ;;
+    4) run_or_clone "dor" "https://github.com/barbexid/dor.git" ;;
+    5) run_or_clone "reedem" "https://github.com/kejuashuejia/reedem.git" ;;
     m|M)
       echo -e "\n\e[36mKeluar dari menu. Selamat bekerja di shell biasa! 🧑‍💻\e[0m"
       break
