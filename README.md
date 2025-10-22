@@ -18,6 +18,7 @@ Termux akan mendeteksi folder yang memiliki `main.py` dan membuat menu otomatis!
 ---
 ## ⌛Update
 - Penambahan fitur update git pull --rebase ke semua repo
+- Ketika pertama kali cloning folder akan otomatis bash setup.sh
 
 ---
 
