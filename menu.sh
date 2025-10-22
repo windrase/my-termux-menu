@@ -79,6 +79,19 @@ delete_repo() {
   read -p "ENTER untuk kembali ke menu..."
 }  
 
+# Update repo
+update_repo() {
+  echo -e "\n\e[36m🔄 Memperbarui semua repo Git di HOME...\e[0m"
+  for dir in "$HOME"/*/; do
+    [ -d "$dir/.git" ] || continue
+    echo -e "\n\e[33m📦 Memperbarui $(basename "$dir")...\e[0m"
+    cd "$dir" || continue
+    git pull --rebase || echo -e "\e[31m❌ Gagal update $(basename "$dir")\e[0m"
+  done
+  echo -e "\n\e[32m✅ Semua repo selesai diperbarui!\e[0m"
+  read -p "ENTER untuk kembali ke menu..."
+}
+
 # Menu Utama repo
 while true; do
   clear
@@ -95,7 +108,7 @@ while true; do
   echo -e "  \e[35m[4]\e[0m ➤ Jalankan dor8"
   echo -e "  \e[35m[5]\e[0m ➤ Jalankan reedem"
 
-  EXCLUDE_SET=" anomali-xl me-cli xldor dor reedem "
+  EXCLUDE_SET=" anomali-xl me-cli xldor dor8 reedem "
   DYN_NAMES=()
   n=6
   for dir in $(find "$HOME" -maxdepth 1 -mindepth 1 -type d -printf "%f\n" | sort); do
@@ -110,6 +123,7 @@ while true; do
   echo
   echo -e "  \e[36m[a]\e[0m ➤ Tambah repo baru"
   echo -e "  \e[31m[d]\e[0m ➤ Hapus repo dari menu"
+  echo -e "  \e[31m[u]\e[0m ➤ Update semua repo"
   echo -e "  \e[33m[m]\e[0m ➤ Keluar menu (masuk shell biasa)"
   echo -e "  \e[31m[q]\e[0m ➤ Keluar Termux"
   echo
@@ -136,7 +150,8 @@ while true; do
     5) run_or_clone "reedem" "https://github.com/kejuashuejia/reedem.git" ;;
     a|A) add_new_repo ;;
     d|D) delete_repo ;;
-    [0-14]*)
+    u|U) delete_repo ;;
+    [0-20]*)
       index=$((pilih - 6))
       if [ $index -ge 0 ] && [ $index -lt ${#DYN_NAMES[@]} ]; then
         cd "$HOME/${DYN_NAMES[$index]}" || {
